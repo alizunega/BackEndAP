@@ -17,37 +17,37 @@ import com.portfolio.backend.entity.Persona;
 import com.portfolio.backend.service.IPersonaService;
 
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins="http://localhost:4200/")
 public class PersonaController {
 
     @Autowired
     public IPersonaService persoServ;
    
 
-    @PostMapping("/crear/persona")
+    @PostMapping("/persona/crear")
     public void agregarPersona(@RequestBody Persona pers){
         persoServ.crearPersona(pers);
     }
 
-    @GetMapping("/ver/personas")
+    @GetMapping("/persona/traer")
     @ResponseBody
     public List<Persona> verPersonas(){
         return persoServ.verPersonas();
     }
 
-    @DeleteMapping("/delete/persona/{id}")
+    @DeleteMapping("/persona/delete/{id}")
     public void borrarPersona(@PathVariable Long id){
         persoServ.borrarPersona(id);
 
     }
 
-    @GetMapping("/buscar/persona/{id}")
+    @GetMapping("/persona/buscar/{id}")
     @ResponseBody
     public Persona buscarPersona(@PathVariable Long id){
         return persoServ.buscarPersona(id);
     }
 
-    @PutMapping("/editar/persona/{id}")
+    @PutMapping("/persona/editar/{id}")
     public void editarPersona(@PathVariable Long id, @RequestBody Persona pers){
         persoServ.editarPersona(id, pers);
     }
