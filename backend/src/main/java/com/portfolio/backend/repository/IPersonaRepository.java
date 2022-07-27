@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.portfolio.backend.entity.Persona;
 
 @Repository
-public interface PersonaRepository extends JpaRepository<Persona, Long> {
+public interface IPersonaRepository extends JpaRepository<Persona, Long> {
     
 }
