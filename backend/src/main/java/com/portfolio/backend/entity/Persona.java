@@ -4,10 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.Setter;
 
 @Getter
@@ -15,12 +15,12 @@ import lombok.Setter;
 @Entity
 public class Persona {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NonNull
+    @NotNull
     @Size(min=1,max=50,message = "no cumple")
     private String nombre;
-    @NonNull
+    @NotNull
     @Size(min=1,max=50,message = "no cumple")
     private String apellido;
     private String img;

@@ -1,11 +1,10 @@
 package com.portfolio.backend.entity;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -17,16 +16,17 @@ public class Experiencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String nombreE;
     private String descripcionE;
-    private Date fInicio;
-    private Date fFin;
+    private String fInicio;
+    private String fFin;
     
     public Experiencia() {
     }
 
 
-    public Experiencia(String nombreE, String descripcionE, Date fInicio, Date fFin) {
+    public Experiencia(String nombreE, String descripcionE, String fInicio, String fFin) {
         this.nombreE = nombreE;
         this.descripcionE = descripcionE;
         this.fInicio = fInicio;

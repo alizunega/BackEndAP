@@ -1,5 +1,6 @@
 package com.portfolio.backend.dto;
 
+
 import javax.validation.constraints.NotBlank;
 
 import lombok.Getter;
@@ -7,28 +8,24 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DtoExperiencia {
+public class DtoEducacion {
     @NotBlank
-    private String nombreE;
+    private String titulo;
     @NotBlank
-    private String descripcionE;
+    private String nombreInstitucion;
     @NotBlank
     private String fInicio;
     private String fFin;
-
-
-    public DtoExperiencia() {
+    
+    public DtoEducacion() {
     }
 
-    public DtoExperiencia(@NotBlank String nombreE, 
-                        @NotBlank String descripcionE, 
+    public DtoEducacion(@NotBlank String titulo, @NotBlank String nombreInstitucion, 
                         @NotBlank String fInicio, String fFin) {
-        this.nombreE = nombreE;
-        this.descripcionE = descripcionE;
+        this.titulo = titulo;
+        this.nombreInstitucion = nombreInstitucion;
         this.fInicio = fInicio;
         this.fFin = fFin;
-
     }
-    
-    
+
 }

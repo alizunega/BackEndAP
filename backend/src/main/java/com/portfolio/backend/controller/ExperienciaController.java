@@ -21,10 +21,9 @@ import com.portfolio.backend.entity.Experiencia;
 import com.portfolio.backend.security.controller.Mensaje;
 import com.portfolio.backend.service.SExperiencia;
 
-@RestController
-
-@RequestMapping("explab")
 @CrossOrigin(origins = "http://localhost:4200/")
+@RestController
+@RequestMapping("explab")
 public class ExperienciaController {
     @Autowired
     SExperiencia sExperiencia;
@@ -38,7 +37,7 @@ public class ExperienciaController {
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> getById(@PathVariable("id") int id) {
         if (!sExperiencia.existsById(id))
-            return new ResponseEntity<>(new Mensaje("no existe"), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(new Mensaje("No existe esa experiencia"), HttpStatus.NOT_FOUND);
 
         Experiencia expe = sExperiencia.getOne(id).get();
         return new ResponseEntity<>(expe, HttpStatus.OK);
@@ -47,12 +46,16 @@ public class ExperienciaController {
     @PostMapping("/create")
     public ResponseEntity<?> create(@RequestBody DtoExperiencia dtoexp) {
         if (StringUtils.isBlank(dtoexp.getNombreE()))
-            return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("El nombre es obligatorio"), 
+            HttpStatus.BAD_REQUEST);
         if (sExperiencia.existsByNombreE(dtoexp.getNombreE()))
-            return new ResponseEntity<>(new Mensaje("Esa experiencia existe"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Esa experiencia existe"), 
+            HttpStatus.BAD_REQUEST);
 
-        Experiencia experiencia = new Experiencia(dtoexp.getNombreE(), dtoexp.getDescripcionE(), dtoexp.getFInicio(),
-                dtoexp.getFFin());
+            
+        Experiencia experiencia = new Experiencia(dtoexp.getNombreE(), dtoexp.getDescripcionE(), 
+                                        dtoexp.getFInicio(), dtoexp.getFFin());
+
         sExperiencia.save(experiencia);
 
         return new ResponseEntity<>(new Mensaje("Experiencia agregada"), HttpStatus.OK);

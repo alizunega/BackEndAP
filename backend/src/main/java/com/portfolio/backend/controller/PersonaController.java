@@ -18,8 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Persona;
 import com.portfolio.backend.service.IPersonaService;
 
+
+@CrossOrigin(origins="http://localhost:4200/", maxAge = 3600)
 @RestController
-@CrossOrigin(origins="http://localhost:4200")
 public class PersonaController {
 
     @Autowired
@@ -31,7 +32,7 @@ public class PersonaController {
         return persoServ.getPersona();
     }
 
-    @GetMapping("persona/traer/perfil")
+    @GetMapping("/persona/traer/perfil")
     public Persona findPersona(){
         return persoServ.findPersona((long)1);
     }
@@ -58,17 +59,21 @@ public class PersonaController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/personas/editar/{id}")
+    @PutMapping("/persona/editar/{id}")
     public Persona editPersona(@PathVariable Long id,
                                @RequestParam("nombre") String nuevoNombre,
-                               @RequestParam("apellido") String nuevoApellido,
-                               @RequestParam("img") String nuevoImg){
+                               @RequestParam("apellido") String nuevoApellido, 
+                               @RequestParam("img") String nuevoImg, 
+                               @RequestParam("about") String nuevoAbout)
+                               {
+
         Persona persona = persoServ.findPersona(id);
         
         persona.setNombre(nuevoNombre);
         persona.setApellido(nuevoApellido);
         persona.setImg(nuevoImg);
-        
+        persona.setAbout(nuevoAbout);
+
         persoServ.savePersona(persona);
         return persona;
     }

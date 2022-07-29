@@ -17,7 +17,8 @@ import javax.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter 
+@Setter
 @Entity
 public class Usuario {
     @Id
@@ -41,18 +42,11 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email,
-            @NotNull String password) {
+    public Usuario(String nombre, String nombreUsuario, String email, String password) {
         this.nombre = nombre;
         this.nombreUsuario = nombreUsuario;
         this.email = email;
         this.password = password;
     }
-
-
- 
-    
-
-
     
 }

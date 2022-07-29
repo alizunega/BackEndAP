@@ -50,7 +50,7 @@ public class UsuarioPrincipal implements UserDetails {
     public String getUsername() {
         return nombreUsuario;
     }
-   
+
     public String getNombre() {
         return nombre;
     }
@@ -58,6 +58,7 @@ public class UsuarioPrincipal implements UserDetails {
     public String getEmail() {
         return email;
     }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -70,6 +71,7 @@ public class UsuarioPrincipal implements UserDetails {
     public boolean isCredentialsNonExpired() {
         return true;
     }
+    
     @Override
     public boolean isEnabled() {
         return true;
