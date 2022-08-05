@@ -1,5 +1,7 @@
 package com.portfolio.backend.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,27 +14,24 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Experiencia {
+public class Experiencia implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
-    private String nombreE;
-    private String descripcionE;
-    private String fInicio;
-    private String fFin;
+    private String nombreExpe;
+    private String descripcionExpe;
+    private String fechainicio;
+    private String fechafin;
     
     public Experiencia() {
     }
 
-
-    public Experiencia(String nombreE, String descripcionE, String fInicio, String fFin) {
-        this.nombreE = nombreE;
-        this.descripcionE = descripcionE;
-        this.fInicio = fInicio;
-        this.fFin = fFin;
+    public Experiencia(@NotNull String nombreExpe, String descripcionExpe, String fechainicio, String fechafin) {
+        this.nombreExpe = nombreExpe;
+        this.descripcionExpe = descripcionExpe;
+        this.fechainicio = fechainicio;
+        this.fechafin = fechafin;
     }
-    
 
-    
 }

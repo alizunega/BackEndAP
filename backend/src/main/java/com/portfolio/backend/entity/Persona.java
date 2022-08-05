@@ -1,5 +1,7 @@
 package com.portfolio.backend.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,10 +15,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Persona {
+public class Persona implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int id;
     @NotNull
     @Size(min=1,max=50,message = "no cumple")
     private String nombre;
@@ -25,18 +27,18 @@ public class Persona {
     private String apellido;
     private String img;
     private String about;
+    private String titulo;
+    
+    public Persona() {
+    }
 
-
-    public Persona(Long id, String nombre, String apellido, String img, String about) {
-        this.id = id;
+    public Persona(@NotNull String nombre, @NotNull String apellido, String img, String about, String titulo) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.img = img;
         this.about = about;
+        this.titulo = titulo;
     }
 
-    public Persona(){
-
-    }
 
 }

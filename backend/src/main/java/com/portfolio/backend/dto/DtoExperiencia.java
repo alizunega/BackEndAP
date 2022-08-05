@@ -1,6 +1,7 @@
 package com.portfolio.backend.dto;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -9,26 +10,27 @@ import lombok.Setter;
 @Setter
 public class DtoExperiencia {
     @NotBlank
-    private String nombreE;
+    private String nombreExpe;
     @NotBlank
-    private String descripcionE;
-    @NotBlank
-    private String fInicio;
-    private String fFin;
+    private String descripcionExpe;
+    @NotNull
+    private String fechainicio;
+    private String fechafin;
 
 
     public DtoExperiencia() {
     }
 
-    public DtoExperiencia(@NotBlank String nombreE, 
-                        @NotBlank String descripcionE, 
-                        @NotBlank String fInicio, String fFin) {
-        this.nombreE = nombreE;
-        this.descripcionE = descripcionE;
-        this.fInicio = fInicio;
-        this.fFin = fFin;
 
+    public DtoExperiencia(@NotBlank String nombreExpe, @NotBlank String descripcionExpe, @NotNull String fechainicio,
+            String fechafin) {
+        this.nombreExpe = nombreExpe;
+        this.descripcionExpe = descripcionExpe;
+        this.fechainicio = fechainicio;
+        this.fechafin = fechafin;
     }
+
+    
     
     
 }

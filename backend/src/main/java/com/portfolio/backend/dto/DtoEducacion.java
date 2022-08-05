@@ -2,6 +2,7 @@ package com.portfolio.backend.dto;
 
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,18 +15,20 @@ public class DtoEducacion {
     @NotBlank
     private String nombreInstitucion;
     @NotBlank
-    private String fInicio;
-    private String fFin;
+    private String fechainicio;
+    private String fechafin;
     
     public DtoEducacion() {
     }
 
-    public DtoEducacion(@NotBlank String titulo, @NotBlank String nombreInstitucion, 
-                        @NotBlank String fInicio, String fFin) {
+    public DtoEducacion(@NotBlank String titulo, @NotBlank String nombreInstitucion, @NotNull String fechainicio,
+            String fechafin) {
         this.titulo = titulo;
         this.nombreInstitucion = nombreInstitucion;
-        this.fInicio = fInicio;
-        this.fFin = fFin;
+        this.fechainicio = fechainicio;
+        this.fechafin = fechafin;
     }
+
+   
 
 }
