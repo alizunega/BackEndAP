@@ -25,7 +25,7 @@ public class PersonaController {
     public PersonaService persoServ;
 
     @GetMapping("/traer/{id}")
-    public ResponseEntity<?> mostrarUsuario(@PathVariable("id") int id){
+    public ResponseEntity<?> mostrarUsuario(@PathVariable int id){
         Persona persona = persoServ.buscarPorId(id);
         if(persona == null){
             return new ResponseEntity<>("Usuario no encontrado", HttpStatus.BAD_REQUEST);

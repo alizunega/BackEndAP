@@ -32,9 +32,16 @@ public class ExperienciaService {
     public Experiencia buscarPorId(int id){
         return experienciaRepo.findById(id).orElse(null);
     }
-    public Experiencia editarExperiencia(Experiencia experiencia){
-        return experienciaRepo.save(experiencia);
+
+    public Experiencia editarExperiencia(int id, Experiencia experiencia){
+        Experiencia expe = experienciaRepo.findById(id).orElse(null);
+        expe.setNombreExpe(experiencia.getNombreExpe());
+        expe.setDescripcionExpe(experiencia.getDescripcionExpe());
+        expe.setFechainicio(experiencia.getFechainicio());
+        expe.setFechafin(experiencia.getFechafin());
+        return experienciaRepo.save(expe);
     }
+    
     public void borrarExperiencia(int id){
         experienciaRepo.deleteById(id);
     }

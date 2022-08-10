@@ -32,7 +32,15 @@ public class PersonaService {
     }
 
     public Persona editarPersona(Persona persona){
-        return personaRepo.save(persona);
+        int id = 1;
+        Persona perso = personaRepo.findById(id).orElse(null);
+        perso.setNombre(persona.getNombre());
+        perso.setApellido(persona.getApellido());
+        perso.setImg(persona.getImg());
+        perso.setAbout(persona.getAbout());
+        perso.setTitulo(persona.getTitulo());
+
+        return personaRepo.save(perso);
     }
     
     public void borrarPersona(int id){

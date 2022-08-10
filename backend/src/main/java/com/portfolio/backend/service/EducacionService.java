@@ -31,9 +31,17 @@ public class EducacionService {
     public Educacion buscarPorId(int id){
         return educacionRepo.findById(id).orElse(null);
     }
-    public Educacion editarEducacion(Educacion educacion){
-        return educacionRepo.save(educacion);
+    public Educacion editarEducacion(int id, Educacion educacion){
+        Educacion edu = educacionRepo.findById(id).orElse(null);
+
+        edu.setTitulo(educacion.getTitulo());
+        edu.setNombreInstitucion(educacion.getNombreInstitucion());
+        edu.setFechainicio(educacion.getFechainicio());
+        edu.setFechafin(educacion.getFechafin());
+        
+        return educacionRepo.save(edu);
     }
+
     public void borrarEducacion(int id){
          educacionRepo.deleteById(id);
     }

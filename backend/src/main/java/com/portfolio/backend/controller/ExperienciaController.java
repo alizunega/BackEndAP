@@ -24,6 +24,10 @@ public class ExperienciaController {
 
     @Autowired
     public ExperienciaService experienciaService;
+    
+    public ExperienciaController(ExperienciaService experienciaService) {
+        this.experienciaService = experienciaService;
+    }
 
 
     @GetMapping("/lista")
@@ -42,14 +46,17 @@ public class ExperienciaController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar")
-    public ResponseEntity<Experiencia> editarExperiencia(@RequestBody Experiencia expe){
-        Experiencia experienciaEditada = experienciaService.editarExperiencia(expe);
+    public ResponseEntity<?> editarExperiencia(@PathVariable int id, @RequestBody Experiencia expe){
+        if(experienciaService.buscarPorId(id) == null){
+            return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
+        }
+        Experiencia experienciaEditada = experienciaService.editarExperiencia(id, expe);
         return new ResponseEntity<Experiencia>(experienciaEditada, HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarExperiencia(@PathVariable("id") int id){
+    public ResponseEntity<?> borrarExperiencia(@PathVariable int id){
         
         if(experienciaService.buscarPorId(id) == null){
             return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);

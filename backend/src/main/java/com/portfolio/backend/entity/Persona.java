@@ -26,6 +26,7 @@ public class Persona implements Serializable{
     @Size(min=1,max=50,message = "no cumple")
     private String apellido;
     private String img;
+    @Size(min=1,max=1000,message = "no cumple")
     private String about;
     private String titulo;
     

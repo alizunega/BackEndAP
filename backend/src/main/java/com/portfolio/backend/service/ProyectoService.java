@@ -30,9 +30,16 @@ public class ProyectoService {
     public Proyecto buscarPorId(int id){
         return proyectoRepo.findById(id).orElse(null);
     }
-    public Proyecto editarProyecto(Proyecto proyecto){
-        return proyectoRepo.save(proyecto);
+    
+    public Proyecto editarProyecto(int id, Proyecto proyecto){
+        Proyecto proyectoNuevo = proyectoRepo.findById(id).orElse(null);
+        proyectoNuevo.setNombreProyecto(proyecto.getNombreProyecto());
+        proyectoNuevo.setDescripcionProyecto(proyecto.getDescripcionProyecto());
+        proyectoNuevo.setImgproyecto(proyecto.getImgproyecto());
+
+        return proyectoRepo.save(proyectoNuevo);
     }
+    
     public void borrarProyecto(int id){
         proyectoRepo.deleteById(id);
     }

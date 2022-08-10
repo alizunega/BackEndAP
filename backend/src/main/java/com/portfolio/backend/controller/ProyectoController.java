@@ -42,14 +42,17 @@ public class ProyectoController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar")
-    public ResponseEntity<Proyecto> editarProyecto(@RequestBody Proyecto proyecto){
-        Proyecto proyectoEditado = proyectoService.editarProyecto(proyecto);
+    public ResponseEntity<?> editarProyecto(@PathVariable int id, @RequestBody Proyecto proyecto){
+        if(proyectoService.buscarPorId(id) == null){
+            return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
+        }
+        Proyecto proyectoEditado = proyectoService.editarProyecto(id, proyecto);
         return new ResponseEntity<Proyecto>(proyectoEditado, HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarProyecto(@PathVariable("id") int id){
+    public ResponseEntity<?> borrarProyecto(@PathVariable int id){
         
         if(proyectoService.buscarPorId(id) == null){
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);

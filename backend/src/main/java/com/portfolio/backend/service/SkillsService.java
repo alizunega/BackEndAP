@@ -30,9 +30,17 @@ public class SkillsService {
     public Skills buscarPorId(int id){
         return skillsRepo.findById(id).orElse(null);
     }
-    public Skills editarSkills(Skills skills){
-        return skillsRepo.save(skills);
+    
+    public Skills editarSkills(int id, Skills skills){
+        Skills nuevaSkills = skillsRepo.findById(id).orElse(null);
+        nuevaSkills.setNombreSkill(skills.getNombreSkill());
+        nuevaSkills.setPorcentaje(skills.getPorcentaje());
+        nuevaSkills.setImgsrc(skills.getImgsrc());
+        nuevaSkills.setColorInterno(skills.getColorInterno());
+        nuevaSkills.setColorExterno(skills.getColorExterno());
+        return skillsRepo.save(nuevaSkills);
     }
+
     public void borrarSkills(int id){
         skillsRepo.deleteById(id);
     }

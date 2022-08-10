@@ -44,7 +44,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable()
-            .authorizeRequests()
+                .authorizeRequests()
                 .antMatchers("**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -52,11 +52,10 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
     }
 
+    
     @Override
-
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
     }
@@ -69,7 +68,7 @@ public class MainSecurity extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-       auth.userDetailsService(userDetailsImpl).passwordEncoder(passwordEncoder());
+        auth.userDetailsService(userDetailsImpl).passwordEncoder(passwordEncoder());
     }
 
 }

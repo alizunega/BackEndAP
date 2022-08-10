@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 public class Educacion implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     @NotNull
     private String titulo;
@@ -34,8 +34,5 @@ public class Educacion implements Serializable{
         this.fechainicio = fechainicio;
         this.fechafin = fechafin;
     }
-    
- 
-
     
 }

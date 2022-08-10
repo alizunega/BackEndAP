@@ -37,15 +37,15 @@ public class SkillsController {
 
 
     //@PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/editar")
-    public ResponseEntity<Skills> editarSkills(@RequestBody Skills skills){
-        Skills skillsEditada = skillsService.editarSkills(skills);
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Skills> editarSkills(@PathVariable int id, @RequestBody Skills skills){
+        Skills skillsEditada = skillsService.editarSkills(id, skills);
         return new ResponseEntity<Skills>(skillsEditada, HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarSkills(@PathVariable("id") int id){
+    public ResponseEntity<?> borrarSkills(@PathVariable int id){
         
         if(skillsService.buscarPorId(id) == null){
             return new ResponseEntity<>("Skill no encontrada", HttpStatus.BAD_REQUEST);

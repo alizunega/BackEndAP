@@ -31,7 +31,7 @@ public class EducacionController {
     }
 
     @GetMapping("/traer/{id}")
-    public ResponseEntity<?> mostrarEducacion(@PathVariable("id") int id){
+    public ResponseEntity<?> mostrarEducacion(@PathVariable int id){
         Educacion educacion = educacionServ.buscarPorId(id);
         if(educacion == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
@@ -49,13 +49,17 @@ public class EducacionController {
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar")
-    public ResponseEntity<Educacion> editarEducacion(@RequestBody Educacion educacion){
-        Educacion educacionEditada = educacionServ.editarEducacion(educacion);
+    public ResponseEntity<?> editarEducacion(@PathVariable int id, @RequestBody Educacion educacion){
+        if(educacionServ.buscarPorId(id) == null){
+            return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
+        }
+
+        Educacion educacionEditada = educacionServ.editarEducacion(id, educacion);
         return new ResponseEntity<Educacion>(educacionEditada, HttpStatus.OK);
     }
 
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarEducacion(@PathVariable("id") int id){
+    public ResponseEntity<?> borrarEducacion(@PathVariable int id){
         
         if(educacionServ.buscarPorId(id) == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
