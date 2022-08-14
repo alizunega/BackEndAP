@@ -17,23 +17,25 @@ import lombok.Setter;
 @Entity
 public class Proyecto implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotBlank
     private String nombreProyecto;
     @NotBlank
     private String descripcionProyecto;
     private String imgproyecto;
+    private String linkproyecto;
 
     
     public Proyecto() {
     }
 
 
-    public Proyecto(@NotBlank String nombreProyecto, @NotBlank String descripcionProyecto, String imgproyecto) {
+    public Proyecto(@NotBlank String nombreProyecto, @NotBlank String descripcionProyecto, String imgproyecto, String linkproyecto) {
         this.nombreProyecto = nombreProyecto;
         this.descripcionProyecto = descripcionProyecto;
         this.imgproyecto = imgproyecto;
+        this.linkproyecto = linkproyecto;
     }
 }
 

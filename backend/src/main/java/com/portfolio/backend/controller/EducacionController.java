@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Educacion;
 import com.portfolio.backend.service.EducacionService;
 
+@CrossOrigin()
 @RequestMapping("/educacion")
 @RestController
 public class EducacionController {
@@ -25,14 +27,14 @@ public class EducacionController {
     public EducacionService educacionServ;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Educacion>> mostrarEducaciones(){
-        List<Educacion> listaEducacion = educacionServ.buscarEducaciones();
+    public ResponseEntity<List<Educacion>> lista(){
+        List<Educacion> listaEducacion = educacionServ.lista();
         return new ResponseEntity<>(listaEducacion, HttpStatus.OK);
     }
 
     @GetMapping("/traer/{id}")
-    public ResponseEntity<?> mostrarEducacion(@PathVariable int id){
-        Educacion educacion = educacionServ.buscarPorId(id);
+    public ResponseEntity<?> getById(@PathVariable int id){
+        Educacion educacion = educacionServ.buscarPorId(id).get();
         if(educacion == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
         }
@@ -41,30 +43,39 @@ public class EducacionController {
    
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
-    public ResponseEntity<Educacion> agregarEducacion(@RequestBody Educacion educacion){
-        Educacion educacionNueva = educacionServ.addEducacion(educacion);
-        return new ResponseEntity<Educacion>(educacionNueva, HttpStatus.OK);
+    public ResponseEntity<?> addEducacion(@RequestBody Educacion educacion){
+        educacionServ.save(educacion);
+        return new ResponseEntity<>("Educación creada",HttpStatus.OK);
     }
 
 
     //@PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/editar")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarEducacion(@PathVariable int id, @RequestBody Educacion educacion){
+
         if(educacionServ.buscarPorId(id) == null){
-            return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Educación no encontrada", HttpStatus.BAD_REQUEST);
         }
 
-        Educacion educacionEditada = educacionServ.editarEducacion(id, educacion);
-        return new ResponseEntity<Educacion>(educacionEditada, HttpStatus.OK);
+        Educacion educacionEditada = educacionServ.buscarPorId(id).get();
+       
+        educacionEditada.setTitulo(educacion.getTitulo());
+        educacionEditada.setNombreInstitucion(educacion.getNombreInstitucion());
+        educacionEditada.setFechainicio(educacion.getFechainicio());
+        educacionEditada.setFechafin(educacion.getFechafin());
+            
+        educacionServ.save(educacionEditada);
+
+        return new ResponseEntity<>("Educación actualizada", HttpStatus.OK);
     }
 
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarEducacion(@PathVariable int id){
+    public ResponseEntity<?> delete(@PathVariable int id){
         
         if(educacionServ.buscarPorId(id) == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
         }
-        educacionServ.borrarEducacion(id);
+        educacionServ.delete(id);
         return new ResponseEntity<>("Educacion borrada", HttpStatus.OK);
     }
    

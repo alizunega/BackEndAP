@@ -17,53 +17,67 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Experiencia;
 import com.portfolio.backend.service.ExperienciaService;
 
-
 @RequestMapping("/experiencia")
 @RestController
 public class ExperienciaController {
 
     @Autowired
     public ExperienciaService experienciaService;
-    
+
     public ExperienciaController(ExperienciaService experienciaService) {
         this.experienciaService = experienciaService;
     }
 
-
     @GetMapping("/lista")
-    public ResponseEntity<List<Experiencia>> mostrarExperiencias(){
-        List<Experiencia> listaExpe = experienciaService.buscarExperiencias();
+    public ResponseEntity<List<Experiencia>> list() {
+        List<Experiencia> listaExpe = experienciaService.lista();
         return new ResponseEntity<>(listaExpe, HttpStatus.OK);
     }
-   
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    @GetMapping("/traer/{id}")
+    public ResponseEntity<?> mostrarExperiencia(@PathVariable int id) {
+
+        Experiencia expe = experienciaService.buscarPorId(id).get();
+        if (expe == null) {
+            return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(expe, HttpStatus.OK);
+    }
+
+    // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
-    public ResponseEntity<Experiencia> agregarExperiencia(@RequestBody Experiencia expe){
-        Experiencia experienciaNueva = experienciaService.addExperiencia(expe);
-        return new ResponseEntity<Experiencia>(experienciaNueva, HttpStatus.OK);
+    public ResponseEntity<?> agregarExperiencia(@RequestBody Experiencia expe) {
+        experienciaService.save(expe);
+        return new ResponseEntity<>("Experiencia añadida", HttpStatus.OK);
     }
 
-
-    //@PreAuthorize("hasRole('ADMIN')")
-    @PutMapping("/editar")
-    public ResponseEntity<?> editarExperiencia(@PathVariable int id, @RequestBody Experiencia expe){
-        if(experienciaService.buscarPorId(id) == null){
+    // @PreAuthorize("hasRole('ADMIN')")
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<?> editarExperiencia(@PathVariable int id, @RequestBody Experiencia experiencia) {
+        if (experienciaService.buscarPorId(id) == null) {
             return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
         }
-        Experiencia experienciaEditada = experienciaService.editarExperiencia(id, expe);
-        return new ResponseEntity<Experiencia>(experienciaEditada, HttpStatus.OK);
+
+        Experiencia experienciaEditada = experienciaService.buscarPorId(id).get();
+
+        experienciaEditada.setNombreExpe(experiencia.getNombreExpe());
+        experienciaEditada.setDescripcionExpe(experiencia.getDescripcionExpe());
+        experienciaEditada.setFechainicio(experiencia.getFechainicio());
+        experienciaEditada.setFechafin(experiencia.getFechafin());
+        experienciaService.save(experienciaEditada);
+
+        return new ResponseEntity<>("Experiencia editada", HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarExperiencia(@PathVariable int id){
-        
-        if(experienciaService.buscarPorId(id) == null){
+    public ResponseEntity<?> borrarExperiencia(@PathVariable int id) {
+
+        if (experienciaService.buscarPorId(id) == null) {
             return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
         }
-        experienciaService.borrarExperiencia(id);
+        experienciaService.delete(id);
         return new ResponseEntity<>("Experiencia borrada", HttpStatus.OK);
     }
-
 
 }

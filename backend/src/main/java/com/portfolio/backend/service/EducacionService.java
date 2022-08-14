@@ -1,6 +1,7 @@
 package com.portfolio.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -21,28 +22,19 @@ public class EducacionService {
     }
     
     //CRUD
-    public Educacion addEducacion(Educacion educacion){
-        return educacionRepo.save(educacion);
+    public void save(Educacion educacion){
+         educacionRepo.save(educacion);
     }
-    public List<Educacion> buscarEducaciones(){
+
+    public List<Educacion> lista(){
         return educacionRepo.findAll();
     }
     
-    public Educacion buscarPorId(int id){
-        return educacionRepo.findById(id).orElse(null);
+    public Optional<Educacion> buscarPorId(int id){
+        return educacionRepo.findById(id);
     }
-    public Educacion editarEducacion(int id, Educacion educacion){
-        Educacion edu = educacionRepo.findById(id).orElse(null);
-
-        edu.setTitulo(educacion.getTitulo());
-        edu.setNombreInstitucion(educacion.getNombreInstitucion());
-        edu.setFechainicio(educacion.getFechainicio());
-        edu.setFechafin(educacion.getFechafin());
-        
-        return educacionRepo.save(edu);
-    }
-
-    public void borrarEducacion(int id){
+    
+    public void delete(int id){
          educacionRepo.deleteById(id);
     }
 

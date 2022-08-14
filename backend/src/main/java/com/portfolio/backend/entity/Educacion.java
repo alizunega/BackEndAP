@@ -16,7 +16,7 @@ import lombok.Setter;
 @Entity
 public class Educacion implements Serializable{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String titulo;

@@ -1,6 +1,7 @@
 package com.portfolio.backend.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -20,27 +21,18 @@ public class ProyectoService {
         this.proyectoRepo = proyectoRepo;
     }
     //CRUD
-    public Proyecto addProyecto(Proyecto proyecto){
-        return proyectoRepo.save(proyecto);
+    public void save(Proyecto proyecto){
+         proyectoRepo.save(proyecto);
     }
-    public List<Proyecto> buscarProyecto(){
+    public List<Proyecto> list(){
         return proyectoRepo.findAll();
     }
     
-    public Proyecto buscarPorId(int id){
-        return proyectoRepo.findById(id).orElse(null);
+    public Optional<Proyecto> buscarPorId(int id){
+        return proyectoRepo.findById(id);
     }
-    
-    public Proyecto editarProyecto(int id, Proyecto proyecto){
-        Proyecto proyectoNuevo = proyectoRepo.findById(id).orElse(null);
-        proyectoNuevo.setNombreProyecto(proyecto.getNombreProyecto());
-        proyectoNuevo.setDescripcionProyecto(proyecto.getDescripcionProyecto());
-        proyectoNuevo.setImgproyecto(proyecto.getImgproyecto());
-
-        return proyectoRepo.save(proyectoNuevo);
-    }
-    
-    public void borrarProyecto(int id){
+ 
+    public void delete(int id){
         proyectoRepo.deleteById(id);
     }
     

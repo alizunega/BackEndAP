@@ -27,16 +27,16 @@ public class ProyectoController {
 
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Proyecto>> mostrarProyectos(){
-        List<Proyecto> listaProyectos= proyectoService.buscarProyecto();
+    public ResponseEntity<List<Proyecto>> lista(){
+        List<Proyecto> listaProyectos= proyectoService.list();
         return new ResponseEntity<>(listaProyectos, HttpStatus.OK);
     }
    
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
-    public ResponseEntity<Proyecto> agregarProyecto(@RequestBody Proyecto proyecto){
-        Proyecto proyectoNuevo = proyectoService.addProyecto(proyecto);
-        return new ResponseEntity<Proyecto>(proyectoNuevo, HttpStatus.OK);
+    public ResponseEntity<?> addProyecto(@RequestBody Proyecto proyecto){
+        proyectoService.save(proyecto);
+        return new ResponseEntity<>("Proyecto creado", HttpStatus.OK);
     }
 
 
@@ -46,8 +46,18 @@ public class ProyectoController {
         if(proyectoService.buscarPorId(id) == null){
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
         }
-        Proyecto proyectoEditado = proyectoService.editarProyecto(id, proyecto);
-        return new ResponseEntity<Proyecto>(proyectoEditado, HttpStatus.OK);
+
+        Proyecto proyectoNuevo = proyectoService.buscarPorId(id).get();
+
+        proyectoNuevo.setNombreProyecto(proyecto.getNombreProyecto());
+        proyectoNuevo.setDescripcionProyecto(proyecto.getDescripcionProyecto());
+        proyectoNuevo.setImgproyecto(proyecto.getImgproyecto());
+        proyectoNuevo.setLinkproyecto(proyecto.getLinkproyecto());
+
+         proyectoService.save(proyectoNuevo);
+
+         return new ResponseEntity<>("Proyecto editado", HttpStatus.OK);
+
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
@@ -57,7 +67,7 @@ public class ProyectoController {
         if(proyectoService.buscarPorId(id) == null){
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
         }
-        proyectoService.borrarProyecto(id);
+        proyectoService.delete(id);
         return new ResponseEntity<>("Proyecto borrado", HttpStatus.OK);
     }
 

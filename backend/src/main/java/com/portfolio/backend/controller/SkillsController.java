@@ -24,23 +24,36 @@ public class SkillsController {
 
     @GetMapping("/lista")
     public ResponseEntity<List<Skills>> mostrarSkills(){
-        List<Skills> listaSkills = skillsService.buscarSkills();
+        List<Skills> listaSkills = skillsService.list();
         return new ResponseEntity<>(listaSkills, HttpStatus.OK);
     }
    
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
-    public ResponseEntity<Skills> agregarSkilll(@RequestBody Skills skills){
-        Skills skillsNueva = skillsService.addSkills(skills);
-        return new ResponseEntity<Skills>(skillsNueva, HttpStatus.OK);
+    public ResponseEntity<?> agregarSkilll(@RequestBody Skills skills){
+        skillsService.save(skills);
+        return new ResponseEntity<>("Skill creada", HttpStatus.OK);
     }
 
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
-    public ResponseEntity<Skills> editarSkills(@PathVariable int id, @RequestBody Skills skills){
-        Skills skillsEditada = skillsService.editarSkills(id, skills);
-        return new ResponseEntity<Skills>(skillsEditada, HttpStatus.OK);
+    public ResponseEntity<?> editarSkills(@PathVariable int id, @RequestBody Skills skills){
+        if(skillsService.buscarPorId(id) == null){
+            return new ResponseEntity<>("Skills no encontrada", HttpStatus.NOT_FOUND);
+        }
+
+        Skills nuevaSkills = skillsService.buscarPorId(id).get();
+   
+            nuevaSkills.setNombreSkill(skills.getNombreSkill());
+            nuevaSkills.setPorcentaje(skills.getPorcentaje());
+            nuevaSkills.setImgsrc(skills.getImgsrc());
+            nuevaSkills.setColorInterno(skills.getColorInterno());
+            nuevaSkills.setColorExterno(skills.getColorExterno());
+             
+            skillsService.save(nuevaSkills);
+
+        return new ResponseEntity<>("Skills añadida", HttpStatus.OK);
     }
 
     //@PreAuthorize("hasRole('ADMIN')")
@@ -50,7 +63,7 @@ public class SkillsController {
         if(skillsService.buscarPorId(id) == null){
             return new ResponseEntity<>("Skill no encontrada", HttpStatus.BAD_REQUEST);
         }
-        skillsService.borrarSkills(id);
+        skillsService.delete(id);
         return new ResponseEntity<>("Skill borrada", HttpStatus.OK);
     }
     
