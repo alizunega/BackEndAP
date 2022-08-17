@@ -1,7 +1,6 @@
 package com.portfolio.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -13,29 +12,31 @@ import com.portfolio.backend.repository.EducacionRepo;
 
 @Service
 @Transactional
-public class EducacionService {
+public class EducacionService implements IEducacionService{
     @Autowired
-    private final EducacionRepo educacionRepo;
-    //constructor
-    public EducacionService(EducacionRepo educacionRepo) {
-        this.educacionRepo = educacionRepo;
-    }
-    
-    //CRUD
-    public void save(Educacion educacion){
-         educacionRepo.save(educacion);
+    EducacionRepo educacionRepo;
+
+    @Override
+    public void deleteEducacion(int id) {
+        educacionRepo.deleteById(id);
     }
 
-    public List<Educacion> lista(){
-        return educacionRepo.findAll();
+    @Override
+    public Educacion findEducacion(int id) {
+        Educacion edu = educacionRepo.findById(id).orElse(null);
+        return edu;
     }
-    
-    public Optional<Educacion> buscarPorId(int id){
-        return educacionRepo.findById(id);
+
+    @Override
+    public List<Educacion> getEducacion() {
+        List<Educacion> educaciones = educacionRepo.findAll();
+        return educaciones;
     }
-    
-    public void delete(int id){
-         educacionRepo.deleteById(id);
-    }
+
+    @Override
+    public void saveEducacion(Educacion educacion) {
+        educacionRepo.save(educacion);
+        
+    } 
 
 }

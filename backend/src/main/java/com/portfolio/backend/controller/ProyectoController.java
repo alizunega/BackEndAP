@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,48 +16,49 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.backend.entity.Proyecto;
-import com.portfolio.backend.service.ProyectoService;
+import com.portfolio.backend.service.IProyectoService;
 
 
-@RequestMapping("/proyecto")
+@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("proyecto")
 @RestController
 public class ProyectoController {
 
     @Autowired
-    public ProyectoService proyectoService;
+    public IProyectoService iProyectoService;
 
 
     @GetMapping("/lista")
     public ResponseEntity<List<Proyecto>> lista(){
-        List<Proyecto> listaProyectos= proyectoService.list();
+        List<Proyecto> listaProyectos= iProyectoService.traerProyectos();
         return new ResponseEntity<>(listaProyectos, HttpStatus.OK);
     }
    
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<?> addProyecto(@RequestBody Proyecto proyecto){
-        proyectoService.save(proyecto);
-        return new ResponseEntity<>("Proyecto creado", HttpStatus.OK);
+        iProyectoService.saveProyecto(proyecto);
+        return new ResponseEntity<>("Proyecto creado correctamente" + proyecto, HttpStatus.OK);
     }
 
 
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar")
     public ResponseEntity<?> editarProyecto(@PathVariable int id, @RequestBody Proyecto proyecto){
-        if(proyectoService.buscarPorId(id) == null){
+        if(iProyectoService.traerProyectoPorId(id) == null){
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
         }
 
-        Proyecto proyectoNuevo = proyectoService.buscarPorId(id).get();
+        Proyecto proyectoNuevo = iProyectoService.traerProyectoPorId(id);
 
         proyectoNuevo.setNombreProyecto(proyecto.getNombreProyecto());
         proyectoNuevo.setDescripcionProyecto(proyecto.getDescripcionProyecto());
         proyectoNuevo.setImgproyecto(proyecto.getImgproyecto());
         proyectoNuevo.setLinkproyecto(proyecto.getLinkproyecto());
 
-         proyectoService.save(proyectoNuevo);
+        iProyectoService.saveProyecto(proyectoNuevo);
 
-         return new ResponseEntity<>("Proyecto editado", HttpStatus.OK);
+         return new ResponseEntity<>("Proyecto editado correctamente" + proyecto, HttpStatus.OK);
 
     }
 
@@ -64,11 +66,11 @@ public class ProyectoController {
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> borrarProyecto(@PathVariable int id){
         
-        if(proyectoService.buscarPorId(id) == null){
+        if(iProyectoService.traerProyectoPorId(id) == null){
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
         }
-        proyectoService.delete(id);
-        return new ResponseEntity<>("Proyecto borrado", HttpStatus.OK);
+        iProyectoService.deleteProyecto(id);
+        return new ResponseEntity<>("Proyecto borrado correctamente", HttpStatus.OK);
     }
 
 }
