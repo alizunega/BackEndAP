@@ -1,7 +1,7 @@
 package com.portfolio.backend.service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 import javax.transaction.Transactional;
 
@@ -11,32 +11,34 @@ import org.springframework.stereotype.Service;
 import com.portfolio.backend.entity.Experiencia;
 import com.portfolio.backend.repository.ExperienciaRepo;
 
-@Service
 @Transactional
-public class ExperienciaService {
+@Service
+public class ExperienciaService implements IExperienciaService{
 
     @Autowired
-    private final ExperienciaRepo experienciaRepo;
-    //constructor
-    public ExperienciaService(ExperienciaRepo experienciaRepo) {
-        this.experienciaRepo = experienciaRepo;
-    }
+    ExperienciaRepo experienciaRepo;
 
-    //CRUD
-    public void save(Experiencia experiencia){
-        experienciaRepo.save(experiencia);
-    }
-    
-    public List<Experiencia> lista(){
-        return experienciaRepo.findAll();
-    }
-    
-    public Optional<Experiencia> buscarPorId(int id){
-        return experienciaRepo.findById(id);
-    }
-
-    public void delete(int id){
+    @Override
+    public void deleteExperiencia(int id) {
         experienciaRepo.deleteById(id);
+        
     }
-    
+
+    @Override
+    public Experiencia findExperiencia(int id) {
+        Experiencia expe = experienciaRepo.findById(id).orElse(null);
+            return expe;
+    }
+
+    @Override
+    public List<Experiencia> getExperiencia() {
+        List<Experiencia> experiencias = experienciaRepo.findAll();
+        return experiencias;
+    }
+
+    @Override
+    public void saveExperiencia(Experiencia experiencia) {
+        experienciaRepo.save(experiencia);    
+    }
+ 
 }

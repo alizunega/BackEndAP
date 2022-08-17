@@ -1,7 +1,6 @@
 package com.portfolio.backend.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -13,26 +12,32 @@ import com.portfolio.backend.repository.SkillsRepo;
 
 @Service
 @Transactional
-public class SkillsService {
+public class SkillsService implements ISkillsService{
     @Autowired
-    public final SkillsRepo skillsRepo;
-    //constructor
-    public SkillsService(SkillsRepo skillsRepo) {
-        this.skillsRepo = skillsRepo;
-    }
-    //CRUD
-    public void save(Skills skills){
-        skillsRepo.save(skills);
-    }
-    public List<Skills> list(){
-        return skillsRepo.findAll();
-    }
-    
-    public Optional<Skills> buscarPorId(int id){
-        return skillsRepo.findById(id);
-    }
+    SkillsRepo skillsRepo;
 
-    public void delete(int id){
+    @Override
+    public void deleteSkills(int id) {
         skillsRepo.deleteById(id);
     }
+
+    @Override
+    public void saveSkills(Skills skill) {
+        skillsRepo.save(skill);   
+    }
+
+    @Override
+    public List<Skills> traerSkills() {
+        List<Skills> skills = skillsRepo.findAll();
+        return skills;
+    }
+
+    @Override
+    public Skills traerSkillsPorId(int id) {
+        Skills skill = skillsRepo.findById(id).orElse(null);
+        return skill;
+    }
+
+    
+   
 }

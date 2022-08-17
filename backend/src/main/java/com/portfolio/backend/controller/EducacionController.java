@@ -16,25 +16,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.portfolio.backend.entity.Educacion;
-import com.portfolio.backend.service.EducacionService;
+import com.portfolio.backend.service.IEducacionService;
 
-@CrossOrigin()
-@RequestMapping("/educacion")
+@CrossOrigin(origins="http://localhost:4200")
+@RequestMapping("educacion")
 @RestController
 public class EducacionController {
 
     @Autowired
-    public EducacionService educacionServ;
+    public IEducacionService iEducacionService;
 
     @GetMapping("/lista")
     public ResponseEntity<List<Educacion>> lista(){
-        List<Educacion> listaEducacion = educacionServ.lista();
+        List<Educacion> listaEducacion = iEducacionService.getEducacion();
         return new ResponseEntity<>(listaEducacion, HttpStatus.OK);
     }
 
     @GetMapping("/traer/{id}")
     public ResponseEntity<?> getById(@PathVariable int id){
-        Educacion educacion = educacionServ.buscarPorId(id).get();
+        Educacion educacion = iEducacionService.findEducacion(id);
         if(educacion == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
         }
@@ -44,7 +44,7 @@ public class EducacionController {
     //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<?> addEducacion(@RequestBody Educacion educacion){
-        educacionServ.save(educacion);
+        iEducacionService.saveEducacion(educacion);
         return new ResponseEntity<>("Educación creada",HttpStatus.OK);
     }
 
@@ -52,30 +52,29 @@ public class EducacionController {
     //@PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarEducacion(@PathVariable int id, @RequestBody Educacion educacion){
+        
+        Educacion educacionEditada = iEducacionService.findEducacion(id);
 
-        if(educacionServ.buscarPorId(id) == null){
+        if(educacionEditada == null){
             return new ResponseEntity<>("Educación no encontrada", HttpStatus.BAD_REQUEST);
         }
 
-        Educacion educacionEditada = educacionServ.buscarPorId(id).get();
-       
         educacionEditada.setTitulo(educacion.getTitulo());
         educacionEditada.setNombreInstitucion(educacion.getNombreInstitucion());
         educacionEditada.setFechainicio(educacion.getFechainicio());
         educacionEditada.setFechafin(educacion.getFechafin());
-            
-        educacionServ.save(educacionEditada);
 
+        iEducacionService.saveEducacion(educacionEditada);
         return new ResponseEntity<>("Educación actualizada", HttpStatus.OK);
     }
 
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> delete(@PathVariable int id){
         
-        if(educacionServ.buscarPorId(id) == null){
+        if(iEducacionService.findEducacion(id) == null){
             return new ResponseEntity<>("Educacion no encontrada", HttpStatus.BAD_REQUEST);
         }
-        educacionServ.delete(id);
+        iEducacionService.deleteEducacion(id);
         return new ResponseEntity<>("Educacion borrada", HttpStatus.OK);
     }
    

@@ -74,7 +74,7 @@ public class AuthController {
 
         usuario.setRoles(roles);
         usuarioService.save(usuario);
-        return new ResponseEntity<>(new Mensaje("Usuario Guardado Correctamente"), HttpStatus.CREATED);
+        return new ResponseEntity<>(new Mensaje("Usuario Creado Correctamente"), HttpStatus.CREATED);
 
     }
 
@@ -82,7 +82,7 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
-            return new ResponseEntity<>(new Mensaje("Campos mal ingresados"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Campos mal ingresados, verifique sus credenciales"), HttpStatus.BAD_REQUEST);
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(),
