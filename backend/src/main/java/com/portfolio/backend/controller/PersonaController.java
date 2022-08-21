@@ -3,8 +3,9 @@ package com.portfolio.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
-//import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Persona;
 import com.portfolio.backend.service.IPersonaService;
 
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("persona")
 public class PersonaController {
@@ -26,25 +27,24 @@ public class PersonaController {
     public IPersonaService iPersonaService;
 
     @GetMapping("/traer")
-    public ResponseEntity<?> mostrarUsuario(){
+    public ResponseEntity<?> mostrarUsuario() {
         Persona persona = iPersonaService.traerPersona();
-        if(persona == null){
+        if (persona == null) {
             return new ResponseEntity<>("Usuario no encontrado", HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(persona, HttpStatus.OK);
     }
-   
-    //@PreAuthorize("hasRole('ADMIN')")
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
-    public ResponseEntity<?> agregarPersona(@RequestBody Persona perso){
+    public ResponseEntity<?> agregarPersona(@RequestBody Persona perso) {
         iPersonaService.savePersona(perso);
         return new ResponseEntity<>("Persona creada exitosamente", HttpStatus.OK);
     }
 
-
-    //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar")
-    public ResponseEntity<?> editar(@RequestBody Persona persona){
+    public ResponseEntity<?> editar(@RequestBody Persona persona) {
         Persona personaEditada = iPersonaService.editarPersona(persona);
         return new ResponseEntity<>(personaEditada, HttpStatus.OK);
     }

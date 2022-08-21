@@ -40,7 +40,7 @@ public class PersonaService implements IPersonaService{
 
     @Override
     public Persona traerPersona() {
-        return personaRepo.getById(1);
+        return personaRepo.getReferenceById(1);
     }
     
 }

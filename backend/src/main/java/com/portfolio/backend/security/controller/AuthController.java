@@ -82,7 +82,8 @@ public class AuthController {
     public ResponseEntity<?> login(@Valid @RequestBody LoginUsuario loginUsuario, BindingResult bindingResult) {
 
         if (bindingResult.hasErrors())
-            return new ResponseEntity<>(new Mensaje("Campos mal ingresados, verifique sus credenciales"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new Mensaje("Campos mal ingresados, verifique sus credenciales"),
+                    HttpStatus.BAD_REQUEST);
 
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginUsuario.getNombreUsuario(),

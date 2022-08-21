@@ -13,7 +13,8 @@ import com.portfolio.backend.security.enums.RolNombre;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+@Getter
+@Setter
 @Entity
 public class Rol {
     @Id
@@ -23,8 +24,7 @@ public class Rol {
     @NotNull
     @Enumerated(EnumType.STRING)
     private RolNombre rolNombre;
-    
-    
+
     public Rol() {
     }
 
@@ -32,5 +32,4 @@ public class Rol {
         this.rolNombre = rolNombre;
     }
 
-    
 }

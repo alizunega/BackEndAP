@@ -18,57 +18,66 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Skills;
 import com.portfolio.backend.service.ISkillsService;
 
-
-@CrossOrigin(origins="http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("skills")
 @RestController
 public class SkillsController {
 
-    @Autowired public ISkillsService iSkillsService;
+    @Autowired
+    public ISkillsService iSkillsService;
 
     @GetMapping("/lista")
-    public ResponseEntity<List<Skills>> mostrarSkills(){
+    public ResponseEntity<List<Skills>> mostrarSkills() {
         List<Skills> listaSkills = iSkillsService.traerSkills();
         return new ResponseEntity<>(listaSkills, HttpStatus.OK);
     }
-   
-    //@PreAuthorize("hasRole('ADMIN')")
-    @PostMapping("/crear")
-    public ResponseEntity<?> agregarSkilll(@RequestBody Skills skills){
-        iSkillsService.saveSkills(skills);
-        return new ResponseEntity<>("Skill creada", HttpStatus.OK);
+
+    @GetMapping("/traer/{id}")
+    public ResponseEntity<?> mostrarSkillporId(@PathVariable int id) {
+
+        Skills skill = iSkillsService.traerSkillsPorId(id);
+        if (skill == null) {
+            return new ResponseEntity<>("Skill no encontrada", HttpStatus.BAD_REQUEST);
+        }
+        return new ResponseEntity<>(skill, HttpStatus.OK);
     }
 
+    // @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/crear")
+    public ResponseEntity<?> agregarSkilll(@RequestBody Skills skill) {
+        iSkillsService.saveSkills(skill);
+        return new ResponseEntity<>(skill, HttpStatus.OK);
+    }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
-    public ResponseEntity<?> editarSkills(@PathVariable int id, @RequestBody Skills skills){
-        if(iSkillsService.traerSkillsPorId(id) == null){
+    public ResponseEntity<?> editarSkills(@PathVariable int id, @RequestBody Skills skill) {
+        if (iSkillsService.traerSkillsPorId(id) == null) {
             return new ResponseEntity<>("Skills no encontrada", HttpStatus.NOT_FOUND);
         }
 
-        Skills nuevaSkills = iSkillsService.traerSkillsPorId(id);
-   
-            nuevaSkills.setNombreSkill(skills.getNombreSkill());
-            nuevaSkills.setPorcentaje(skills.getPorcentaje());
-            nuevaSkills.setImgsrc(skills.getImgsrc());
-            nuevaSkills.setColorInterno(skills.getColorInterno());
-            nuevaSkills.setColorExterno(skills.getColorExterno());
-             
-            iSkillsService.saveSkills(nuevaSkills);
+        Skills nuevaSkill = iSkillsService.traerSkillsPorId(id);
 
-        return new ResponseEntity<>("Skills añadida", HttpStatus.OK);
+        nuevaSkill.setNombreSkill(skill.getNombreSkill());
+        nuevaSkill.setPorcentaje(skill.getPorcentaje());
+        nuevaSkill.setImgsrc(skill.getImgsrc());
+        nuevaSkill.setColorInterno(skill.getColorInterno());
+        nuevaSkill.setColorExterno(skill.getColorExterno());
+
+        iSkillsService.saveSkills(nuevaSkill);
+
+        return new ResponseEntity<>(nuevaSkill, HttpStatus.OK);
     }
 
-    //@PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<?> borrarSkills(@PathVariable int id){
-        
-        if(iSkillsService.traerSkillsPorId(id) == null){
+    public ResponseEntity<?> borrarSkills(@PathVariable int id) {
+
+        if (iSkillsService.traerSkillsPorId(id) == null) {
             return new ResponseEntity<>("Skill no encontrada", HttpStatus.BAD_REQUEST);
         }
         iSkillsService.deleteSkills(id);
-        return new ResponseEntity<>("Skill borrada", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-    
+
 }
