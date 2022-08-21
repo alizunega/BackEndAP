@@ -14,5 +14,5 @@ public class NuevoUsuario {
     private String email;
     private String password;
     private Set<String> roles = new HashSet<>();
-    
+
 }

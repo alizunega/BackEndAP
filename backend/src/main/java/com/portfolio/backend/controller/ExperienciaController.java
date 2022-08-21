@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,14 +43,14 @@ public class ExperienciaController {
         return new ResponseEntity<>(expe, HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/crear")
     public ResponseEntity<?> agregarExperiencia(@RequestBody Experiencia expe) {
         iExperienciaService.saveExperiencia(expe);
-        return new ResponseEntity<>("Experiencia añadida", HttpStatus.OK);
+        return new ResponseEntity<>(expe, HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarExperiencia(@PathVariable int id, @RequestBody Experiencia experiencia) {
         if (iExperienciaService.findExperiencia(id) == null) {
@@ -65,10 +66,10 @@ public class ExperienciaController {
 
         iExperienciaService.saveExperiencia(experienciaEditada);
 
-        return new ResponseEntity<>("Experiencia editada", HttpStatus.OK);
+        return new ResponseEntity<>(experienciaEditada, HttpStatus.OK);
     }
 
-    // @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> borrarExperiencia(@PathVariable int id) {
 
@@ -76,7 +77,7 @@ public class ExperienciaController {
             return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
         }
         iExperienciaService.deleteExperiencia(id);
-        return new ResponseEntity<>("Experiencia borrada", HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
