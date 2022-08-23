@@ -21,10 +21,9 @@ import com.portfolio.backend.security.jwt.JwtTokenFilter;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MainSecurity {
-    /*
-     * @Autowired
-     * UserDetailsImplements userDetailsImplements;
-     */
+
+    //  * @Autowired
+    //  * UserDetailsImplements userDetailsImplements;
 
     @Autowired
     JwtEntryPoint jwtEntryPoint;
