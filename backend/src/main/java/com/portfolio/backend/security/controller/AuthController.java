@@ -34,7 +34,7 @@ import com.portfolio.backend.security.dto.NuevoUsuario;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin
+@CrossOrigin()
 public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
