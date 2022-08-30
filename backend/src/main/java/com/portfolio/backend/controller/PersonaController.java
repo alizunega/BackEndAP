@@ -3,7 +3,7 @@ package com.portfolio.backend.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,14 +35,14 @@ public class PersonaController {
         return new ResponseEntity<>(persona, HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PostMapping("/crear")
     public ResponseEntity<?> agregarPersona(@RequestBody Persona perso) {
         iPersonaService.savePersona(perso);
         return new ResponseEntity<>("Persona creada exitosamente", HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+
     @PutMapping("/editar")
     public ResponseEntity<?> editar(@RequestBody Persona persona) {
         Persona personaEditada = iPersonaService.editarPersona(persona);
