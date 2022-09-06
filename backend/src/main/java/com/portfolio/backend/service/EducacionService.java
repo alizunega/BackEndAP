@@ -12,7 +12,7 @@ import com.portfolio.backend.repository.EducacionRepo;
 
 @Service
 @Transactional
-public class EducacionService implements IEducacionService{
+public class EducacionService implements IEducacionService {
     @Autowired
     EducacionRepo educacionRepo;
 
@@ -35,8 +35,9 @@ public class EducacionService implements IEducacionService{
 
     @Override
     public void saveEducacion(Educacion educacion) {
+
         educacionRepo.save(educacion);
-        
-    } 
+
+    }
 
 }
