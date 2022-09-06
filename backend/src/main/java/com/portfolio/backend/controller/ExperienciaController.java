@@ -2,6 +2,7 @@ package com.portfolio.backend.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,9 +43,14 @@ public class ExperienciaController {
         return new ResponseEntity<>(expe, HttpStatus.OK);
     }
 
-
     @PostMapping("/crear")
     public ResponseEntity<?> agregarExperiencia(@RequestBody Experiencia expe) {
+        if (StringUtils.isBlank(expe.getNombreExpe())
+                && StringUtils.isBlank(expe.getDescripcionExpe())
+                && StringUtils.isBlank(expe.getFechainicio())) {
+            return new ResponseEntity<>("Hay campos obligatorios sin completar.", HttpStatus.BAD_REQUEST);
+
+        }
         iExperienciaService.saveExperiencia(expe);
         return new ResponseEntity<>(expe, HttpStatus.OK);
     }
@@ -54,7 +60,13 @@ public class ExperienciaController {
         if (iExperienciaService.findExperiencia(id) == null) {
             return new ResponseEntity<>("Experiencia no encontrada", HttpStatus.BAD_REQUEST);
         }
+        if (StringUtils.isBlank(experiencia.getNombreExpe())
+                && StringUtils.isBlank(experiencia.getDescripcionExpe())
+                && StringUtils.isBlank(experiencia.getFechainicio())) {
+            return new ResponseEntity<>("Hay campos obligatorios sin completar.", HttpStatus.BAD_REQUEST);
+        }
 
+        
         Experiencia experienciaEditada = iExperienciaService.findExperiencia(id);
 
         experienciaEditada.setNombreExpe(experiencia.getNombreExpe());

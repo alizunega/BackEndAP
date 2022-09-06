@@ -5,7 +5,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Range;
 
@@ -24,9 +23,9 @@ public class Skills {
     private int id;
     @NotBlank
     private String nombreSkill;
-    @NotNull
-    @Range(min = 1, max = 100)
+    @Range(min = 0, max = 100, message = "Por favor, ingrese valores positivos entre 0 y 100.")
     private int porcentaje;
+    @NotBlank
     private String imgsrc;
     private String colorInterno;
     private String colorExterno;
@@ -34,7 +33,7 @@ public class Skills {
     public Skills() {
     }
 
-    public Skills(@NotBlank String nombreSkill, @NotNull @Range(min = 1, max = 100) int porcentaje, String imgsrc,
+    public Skills(@NotBlank String nombreSkill, @Range(min = 1, max = 100) int porcentaje,@NotBlank String imgsrc,
             String colorInterno, String colorExterno) {
         this.nombreSkill = nombreSkill;
         this.porcentaje = porcentaje;

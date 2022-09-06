@@ -2,6 +2,7 @@ package com.portfolio.backend.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,6 +44,12 @@ public class EducacionController {
 
     @PostMapping("/crear")
     public ResponseEntity<?> addEducacion(@RequestBody Educacion educacion) {
+        if (StringUtils.isBlank(educacion.getTitulo())
+                && StringUtils.isBlank(educacion.getNombreInstitucion())
+                && StringUtils.isBlank(educacion.getFechainicio())) {
+            return new ResponseEntity<>("Hay campos obligatorios sin completar.", HttpStatus.BAD_REQUEST);
+
+        }
         iEducacionService.saveEducacion(educacion);
         return new ResponseEntity<>(educacion, HttpStatus.OK);
     }
@@ -53,7 +60,13 @@ public class EducacionController {
         Educacion educacionEditada = iEducacionService.findEducacion(id);
 
         if (educacionEditada == null) {
-            return new ResponseEntity<>("Educación no encontrada", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Educación no encontrada.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (StringUtils.isBlank(educacion.getTitulo())
+                && StringUtils.isBlank(educacion.getNombreInstitucion())
+                && StringUtils.isBlank(educacion.getFechainicio())) {
+            return new ResponseEntity<>("Hay campos obligatorios sin completar.", HttpStatus.BAD_REQUEST);
         }
 
         educacionEditada.setTitulo(educacion.getTitulo());
@@ -64,7 +77,6 @@ public class EducacionController {
         iEducacionService.saveEducacion(educacionEditada);
         return new ResponseEntity<>(educacionEditada, HttpStatus.OK);
     }
-
 
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> delete(@PathVariable int id) {

@@ -10,15 +10,15 @@ import com.portfolio.backend.repository.PersonaRepo;
 
 @Service
 @Transactional
-public class PersonaService implements IPersonaService{
-    
+public class PersonaService implements IPersonaService {
+
     @Autowired
     PersonaRepo personaRepo;
 
     @Override
     public void deletePersona(int id) {
         personaRepo.deleteById(1);
-        
+
     }
 
     @Override
@@ -35,12 +35,14 @@ public class PersonaService implements IPersonaService{
 
     @Override
     public void savePersona(Persona persona) {
-        personaRepo.save(persona); 
+
+        personaRepo.save(persona);
+
     }
 
     @Override
     public Persona traerPersona() {
         return personaRepo.getReferenceById(1);
     }
-    
+
 }

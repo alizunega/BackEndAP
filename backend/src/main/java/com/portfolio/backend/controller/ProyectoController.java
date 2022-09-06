@@ -2,6 +2,7 @@ package com.portfolio.backend.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,9 +33,13 @@ public class ProyectoController {
         return new ResponseEntity<>(listaProyectos, HttpStatus.OK);
     }
 
-
     @PostMapping("/crear")
     public ResponseEntity<?> addProyecto(@RequestBody Proyecto proyecto) {
+        if (StringUtils.isBlank(proyecto.getNombreProyecto())
+                && StringUtils.isBlank(proyecto.getDescripcionProyecto())) {
+            return new ResponseEntity<>("Campos obligatorios vacios.", HttpStatus.BAD_REQUEST);
+        }
+
         iProyectoService.saveProyecto(proyecto);
         return new ResponseEntity<>(proyecto, HttpStatus.OK);
     }
@@ -49,11 +54,15 @@ public class ProyectoController {
         return new ResponseEntity<>(proyecto, HttpStatus.OK);
     }
 
-
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarProyecto(@PathVariable int id, @RequestBody Proyecto proyecto) {
         if (iProyectoService.traerProyectoPorId(id) == null) {
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
+        }
+        
+        if (StringUtils.isBlank(proyecto.getNombreProyecto())
+                && StringUtils.isBlank(proyecto.getDescripcionProyecto())) {
+            return new ResponseEntity<>("Campos obligatorios vacios o incorrectos.", HttpStatus.BAD_REQUEST);
         }
 
         Proyecto proyectoNuevo = iProyectoService.traerProyectoPorId(id);
@@ -68,7 +77,6 @@ public class ProyectoController {
         return new ResponseEntity<>(proyectoNuevo, HttpStatus.OK);
 
     }
-
 
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<?> borrarProyecto(@PathVariable int id) {

@@ -2,6 +2,7 @@ package com.portfolio.backend.controller;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,18 +43,28 @@ public class SkillsController {
         return new ResponseEntity<>(skill, HttpStatus.OK);
     }
 
-
     @PostMapping("/crear")
     public ResponseEntity<?> agregarSkilll(@RequestBody Skills skill) {
+        if (StringUtils.isBlank(skill.getNombreSkill())
+                && StringUtils.isBlank(skill.getImgsrc())
+                && skill.getPorcentaje() <= 0) {
+            return new ResponseEntity<>("Campos obligatorios vacios o incorrectos.", HttpStatus.BAD_REQUEST);
+
+        }
         iSkillsService.saveSkills(skill);
         return new ResponseEntity<>(skill, HttpStatus.OK);
     }
 
-
     @PutMapping("/editar/{id}")
     public ResponseEntity<?> editarSkills(@PathVariable int id, @RequestBody Skills skill) {
         if (iSkillsService.traerSkillsPorId(id) == null) {
-            return new ResponseEntity<>("Skills no encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Skills no encontrada", HttpStatus.BAD_REQUEST);
+        }
+        if (StringUtils.isBlank(skill.getNombreSkill())
+                && StringUtils.isBlank(skill.getImgsrc())
+                && skill.getPorcentaje() <= 0) {
+
+            return new ResponseEntity<>("Campos obligatorios vacios o incorrectos.", HttpStatus.BAD_REQUEST);
         }
 
         Skills nuevaSkill = iSkillsService.traerSkillsPorId(id);
@@ -73,7 +84,7 @@ public class SkillsController {
     public ResponseEntity<?> borrarSkills(@PathVariable int id) {
 
         if (iSkillsService.traerSkillsPorId(id) == null) {
-            return new ResponseEntity<>("Skill no encontrada", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>("Skill no encontrada", HttpStatus.NOT_FOUND);
         }
         iSkillsService.deleteSkills(id);
         return new ResponseEntity<>(HttpStatus.OK);
