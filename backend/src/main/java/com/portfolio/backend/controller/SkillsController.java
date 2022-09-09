@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Skills;
 import com.portfolio.backend.service.ISkillsService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://portfolioap-2022.web.app")
 @RequestMapping("skills")
 @RestController
 public class SkillsController {

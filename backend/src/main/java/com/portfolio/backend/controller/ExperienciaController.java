@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Experiencia;
 import com.portfolio.backend.service.IExperienciaService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://portfolioap-2022.web.app")
 @RequestMapping("experiencia")
 @RestController
 public class ExperienciaController {
@@ -66,7 +66,6 @@ public class ExperienciaController {
             return new ResponseEntity<>("Hay campos obligatorios sin completar.", HttpStatus.BAD_REQUEST);
         }
 
-        
         Experiencia experienciaEditada = iExperienciaService.findExperiencia(id);
 
         experienciaEditada.setNombreExpe(experiencia.getNombreExpe());

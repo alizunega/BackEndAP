@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.portfolio.backend.entity.Proyecto;
 import com.portfolio.backend.service.IProyectoService;
 
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "https://portfolioap-2022.web.app")
 @RequestMapping("proyecto")
 @RestController
 public class ProyectoController {
