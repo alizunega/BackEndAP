@@ -30,7 +30,8 @@ public class Experiencia {
     public Experiencia() {
     }
 
-    public Experiencia(@NotBlank String nombreExpe,@NotBlank String descripcionExpe, @NotBlank String fechainicio, String fechafin) {
+    public Experiencia(@NotBlank String nombreExpe, @NotBlank String descripcionExpe, @NotBlank String fechainicio,
+            String fechafin) {
         this.nombreExpe = nombreExpe;
         this.descripcionExpe = descripcionExpe;
         this.fechainicio = fechainicio;

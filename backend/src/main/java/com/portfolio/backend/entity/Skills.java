@@ -33,7 +33,7 @@ public class Skills {
     public Skills() {
     }
 
-    public Skills(@NotBlank String nombreSkill, @Range(min = 1, max = 100) int porcentaje,@NotBlank String imgsrc,
+    public Skills(@NotBlank String nombreSkill, @Range(min = 1, max = 100) int porcentaje, @NotBlank String imgsrc,
             String colorInterno, String colorExterno) {
         this.nombreSkill = nombreSkill;
         this.porcentaje = porcentaje;

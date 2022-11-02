@@ -7,5 +7,5 @@ import com.portfolio.backend.entity.Educacion;
 
 @Repository
 public interface EducacionRepo extends JpaRepository<Educacion, Integer> {
-    
+
 }

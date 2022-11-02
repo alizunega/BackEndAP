@@ -1,6 +1,5 @@
 package com.portfolio.backend.entity;
 
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,11 +11,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 @Getter
 @Setter
 @Entity
-public class Educacion{
+public class Educacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -29,14 +28,15 @@ public class Educacion{
     private String fechafin;
 
     public Educacion() {
-        
+
     }
 
-    public Educacion(@NotBlank String titulo, @NotBlank String nombreInstitucion, @NotBlank String fechainicio, String fechafin) {
+    public Educacion(@NotBlank String titulo, @NotBlank String nombreInstitucion, @NotBlank String fechainicio,
+            String fechafin) {
         this.titulo = titulo;
         this.nombreInstitucion = nombreInstitucion;
         this.fechainicio = fechainicio;
         this.fechafin = fechafin;
     }
-    
+
 }
