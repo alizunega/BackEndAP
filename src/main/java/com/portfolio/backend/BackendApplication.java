@@ -1,4 +1,4 @@
-package com.portfolio;
+package com.portfolio.backend;
 
 import java.util.Arrays;
 
