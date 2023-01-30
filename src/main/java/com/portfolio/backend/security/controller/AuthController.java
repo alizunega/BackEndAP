@@ -21,16 +21,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.portfolio.backend.security.dto.JwtDto;
+import com.portfolio.backend.security.dto.LoginUsuario;
+import com.portfolio.backend.security.dto.NuevoUsuario;
 import com.portfolio.backend.security.entity.Rol;
 import com.portfolio.backend.security.entity.Usuario;
 import com.portfolio.backend.security.enums.RolNombre;
 import com.portfolio.backend.security.jwt.JwtProvider;
 import com.portfolio.backend.security.service.RolService;
 import com.portfolio.backend.security.service.UsuarioService;
-
-import com.portfolio.backend.security.dto.JwtDto;
-import com.portfolio.backend.security.dto.LoginUsuario;
-import com.portfolio.backend.security.dto.NuevoUsuario;
 
 @RestController
 @RequestMapping("/auth")

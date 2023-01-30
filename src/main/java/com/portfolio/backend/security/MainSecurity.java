@@ -20,7 +20,7 @@ import com.portfolio.backend.security.service.UserDetailsImpl;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableGlobalMethodSecurity
 public class MainSecurity {
     @Autowired
     UserDetailsImpl userDetailsImpl;
@@ -49,7 +49,7 @@ public class MainSecurity {
         http.cors().and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-                .authorizeRequests()
+                .authorizeHttpRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
 
