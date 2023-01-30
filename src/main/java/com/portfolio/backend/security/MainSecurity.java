@@ -20,7 +20,7 @@ import com.portfolio.backend.security.service.UserDetailsImpl;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class MainSecurity {
     @Autowired
     UserDetailsImpl userDetailsImpl;
