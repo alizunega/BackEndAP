@@ -33,7 +33,7 @@ import com.portfolio.backend.security.service.UsuarioService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin()
+@CrossOrigin(origins = "https://backend-alizunega.koyeb.app")
 public class AuthController {
     @Autowired
     PasswordEncoder passwordEncoder;
