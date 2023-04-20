@@ -20,8 +20,8 @@ import com.portfolio.backend.entity.Proyecto;
 import com.portfolio.backend.service.IProyectoService;
 
 @CrossOrigin(origins = "https://portfolioap-2022.web.app")
-@RequestMapping("proyecto")
 @RestController
+@RequestMapping("proyecto")
 public class ProyectoController {
 
     @Autowired
@@ -59,7 +59,7 @@ public class ProyectoController {
         if (iProyectoService.traerProyectoPorId(id) == null) {
             return new ResponseEntity<>("Proyecto no encontrado", HttpStatus.BAD_REQUEST);
         }
-        
+
         if (StringUtils.isBlank(proyecto.getNombreProyecto())
                 && StringUtils.isBlank(proyecto.getDescripcionProyecto())) {
             return new ResponseEntity<>("Campos obligatorios vacios o incorrectos.", HttpStatus.BAD_REQUEST);
