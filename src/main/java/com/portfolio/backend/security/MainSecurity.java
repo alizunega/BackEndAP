@@ -16,8 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.portfolio.backend.security.jwt.JwtEntryPoint;
 
-import static org.springframework.security.config.Customizer.withDefaults;
-
 import com.portfolio.backend.security.jwt.JwtTokenFilter;
 import com.portfolio.backend.security.service.UserDetailsImpl;
 
@@ -49,18 +47,9 @@ public class MainSecurity {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        /*
-         * http.cors().and().csrf().disable()
-         * .exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
-         * .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).
-         * and()
-         * .authorizeHttpRequests()
-         * .antMatchers("/**").permitAll()
-         * .anyRequest().authenticated();
-         */
-        http.cors(withDefaults()).csrf(withDefaults())
-                .exceptionHandling(handling -> handling.authenticationEntryPoint(jwtEntryPoint))
-                .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http.cors().and().csrf().disable()
+                .exceptionHandling().authenticationEntryPoint(jwtEntryPoint).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .authorizeHttpRequests()
                 .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
