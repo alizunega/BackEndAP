@@ -1,6 +1,7 @@
 {
-    "java.configuration.updateBuildConfiguration": "automatic",
-    "maven.view": "flat",
-    "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
-    "java.compile.nullAnalysis.mode": "disabled"
+  "java.configuration.updateBuildConfiguration": "automatic",
+  "maven.view": "flat",
+  "editor.fontFamily": "Fira Code, Menlo, Monaco, 'Courier New', monospace",
+  "java.compile.nullAnalysis.mode": "disabled",
+  "java.jdt.ls.vmargs": "-XX:+UseParallelGC -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xmx2G -Xms100m -javaagent:\"/Users/alicia/.vscode/extensions/gabrielbb.vscode-lombok-1.0.1/server/lombok.jar\""
 }
